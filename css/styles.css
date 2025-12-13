@@ -69,9 +69,9 @@
   --radius-full: 50%;
 
   /* Transitions */
-  --transition-fast: 0.2s ease;
-  --transition-base: 0.3s ease;
-  --transition-slow: 0.5s ease;
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.25s ease;
+  --transition-slow: 0.4s ease;
 }
 
 /* ===================================
@@ -212,13 +212,25 @@ ul {
 }
 
 .logo-section {
-  flex: 1;
+  flex: 0 0 auto; /* Prevent greedy growth pushing things around */
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
 }
 
 .logo-img {
-  height: 80px;
+  height: 60px; /* Sligthly smaller to fit with text */
   width: auto;
   display: block;
+}
+
+.logo-text {
+  font-family: var(--font-primary);
+  font-weight: 800;
+  font-size: 1.2rem; /* Smaller font to not compete with logo */
+  color: var(--color-secondary);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 /* Legacy text logo styles - keeping for fallback */
@@ -363,7 +375,7 @@ ul {
   height: 100%;
   background: var(--gradient-hero);
   z-index: 1;
-  opacity: 0.7;
+  opacity: 0.5; /* Reduced from 0.7 for a softer look */
 }
 
 .hero-content {
@@ -381,6 +393,16 @@ ul {
   line-height: 1.2;
   margin-bottom: var(--spacing-md);
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.brand-highlight {
+  color: var(--color-accent);
+  display: block;
+  margin-bottom: var(--spacing-sm); /* Increased separation */
+  font-size: 1.2em;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  line-height: 1.2; /* Relax line height */
 }
 
 .hero-subtitle {
@@ -523,9 +545,33 @@ ul {
 }
 
 .values-grid {
-  display: grid;
+  display: flex;
   gap: var(--spacing-md);
-  grid-template-columns: repeat(2, 1fr);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: var(--spacing-sm);
+}
+
+/* Hide scrollbar but keep functionality */
+.values-grid::-webkit-scrollbar {
+  height: 8px;
+}
+
+.values-grid::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+.values-grid::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 4px;
+}
+
+.values-grid::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-dark);
 }
 
 .value-item {
@@ -539,6 +585,11 @@ ul {
   background: var(--color-light-bg);
   transition: all var(--transition-base);
   text-align: center;
+  /* Carousel props */
+  min-width: 160px;
+  flex: 1 0 auto;
+  scroll-snap-align: center;
+  border: 1px solid var(--color-border);
 }
 
 .value-item:hover {
@@ -1187,7 +1238,7 @@ ul {
 }
 
 /* ===================================
-   Responsive Design - Tablet
+   Responsive Design - Grid/Layout (Tablet+)
    =================================== */
 @media (min-width: 768px) {
   :root {
@@ -1195,37 +1246,7 @@ ul {
     --font-size-xxl: 2.5rem;
   }
 
-  .menu-toggle {
-    display: none;
-  }
-
-  .nav {
-    position: static;
-    width: auto;
-    height: auto;
-    background: transparent;
-    box-shadow: none;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-lg);
-  }
-
-  .nav-list {
-    flex-direction: row;
-    gap: var(--spacing-md);
-    margin-bottom: 0;
-  }
-
-  .nav-link {
-    font-size: var(--font-size-md);
-    padding: var(--spacing-xs) var(--spacing-sm);
-  }
-
-  .logo-img {
-    height: 100px;
-  }
-
+  /* Keep Grids responsive at tablet */
   .about-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1260,16 +1281,62 @@ ul {
   .footer-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+  /* Restore Grid for Values on Tablet */
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2x2 on tablet */
+    overflow-x: visible;
+    padding-bottom: 0;
+  }
+
+  .value-item {
+    min-width: auto;
+    flex: 1;
+    border: none;
+  }
 }
 
 /* ===================================
-   Responsive Design - Desktop
+   Responsive Design - Desktop (Header & Large Layouts)
    =================================== */
 @media (min-width: 1024px) {
   :root {
     --font-size-hero: 3.5rem;
   }
 
+  /* Header transitions to Full Nav here */
+  .menu-toggle {
+    display: none;
+  }
+
+  .nav {
+    position: static;
+    width: auto;
+    height: auto;
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+  }
+
+  .nav-list {
+    flex-direction: row;
+    gap: var(--spacing-md);
+    margin-bottom: 0;
+  }
+
+  .nav-link {
+    font-size: var(--font-size-md);
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .logo-img {
+    height: 80px; /* Restore larger logo on big screens */
+  }
+
+  /* Layout refinements for big screens */
   .services-grid {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -1280,5 +1347,9 @@ ul {
 
   .hero-title {
     font-size: 4rem;
+  }
+
+  .values-grid {
+    grid-template-columns: repeat(4, 1fr); /* 4 in a row on desktop */
   }
 }
