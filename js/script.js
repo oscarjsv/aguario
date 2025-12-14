@@ -186,3 +186,55 @@ console.log(
   "%c🌿 Desarrollado con tecnologías web modernas",
   "color: #43A047; font-size: 12px;"
 );
+// ===================================
+// Slider Dots Logic (Generic)
+// ===================================
+function setupSliderDots(gridSelector, dotsSelector, cardSelector) {
+  const grid = document.querySelector(gridSelector);
+  const dotsContainer = document.querySelector(dotsSelector);
+
+  if (grid && dotsContainer) {
+    const dots = dotsContainer.querySelectorAll(".dot");
+
+    if (dots.length > 0) {
+      // Update dots on scroll
+      grid.addEventListener("scroll", () => {
+        const scrollPosition = grid.scrollLeft;
+        const card = grid.querySelector(cardSelector);
+        if (!card) return;
+
+        const cardWidth = card.offsetWidth;
+        const gap = 24;
+        const activeIndex = Math.round(scrollPosition / (cardWidth + gap));
+
+        dots.forEach((dot, index) => {
+          if (index === activeIndex) {
+            dot.classList.add("active");
+          } else {
+            dot.classList.remove("active");
+          }
+        });
+      });
+
+      // Click dot to scroll
+      dots.forEach((dot, index) => {
+        dot.addEventListener("click", () => {
+          const card = grid.querySelector(cardSelector);
+          if (!card) return;
+          const cardWidth = card.offsetWidth;
+          const gap = 24;
+          grid.scrollTo({
+            left: index * (cardWidth + gap),
+            behavior: "smooth",
+          });
+        });
+      });
+    }
+  }
+}
+
+// Initialize sliders
+document.addEventListener("DOMContentLoaded", () => {
+  setupSliderDots(".about-grid", ".about-dots", ".about-card");
+  setupSliderDots(".services-grid", ".services-dots", ".service-card");
+});

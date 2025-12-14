@@ -107,6 +107,13 @@
                 </div>
             </div>
 
+            <!-- Slider Navigation Dots (Mobile) -->
+            <div class="slider-dots about-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+
             <!-- Values -->
             <div class="values-section">
                 <h3 class="values-title">Nuestros Valores</h3>
@@ -204,6 +211,25 @@
                     <h3>Innovación y Tecnología</h3>
                     <p>Transformación digital y TIC en gestión territorial moderna</p>
                 </div>
+            </div>
+
+            <!-- Slider Navigation Dots (Mobile) -->
+            <div class="slider-dots services-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <!-- JS will handle number of dots if dynamic, but hardcoding 6 dots might be too many. 
+                     Let's stick to a few or let JS generate them? 
+                     The current JS relies on existing dots. There are 6 service cards. 
+                     Let's add 6 dots or just 3 to indicate scroll?
+                     The user's image showed 3 dots. Having 6 dots might be cluttered.
+                     However, the JS logic `forEach` binds index to scroll position.
+                     If I have 6 cards, I probably need 6 dots for 1-to-1 mapping, or change logic.
+                     Let's put 6 dots for now to match the 6 cards.
+                -->
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
             </div>
         </div>
     </section>

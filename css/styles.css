@@ -1,3 +1,4 @@
+/* Searching for slider styles */
 /* ===================================
    CSS Variables - Design System
    =================================== */
@@ -496,6 +497,28 @@ ul {
 .about-card:hover {
   transform: translateY(-5px) scale(1.02);
   box-shadow: var(--shadow-lg);
+}
+
+/* Slider Dots Styles */
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: var(--spacing-md);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dot.active {
+  background-color: var(--color-primary);
+  transform: scale(1.2);
 }
 
 .card-icon {
@@ -1259,10 +1282,22 @@ ul {
   }
 
   /* Keep Grids responsive at tablet */
+  /* Keep Grids responsive at tablet */
   .about-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     overflow-x: visible;
+  }
+
+  /* Hide dots on tablet/desktop since it's a grid now */
+  .about-dots {
+    display: none;
+  }
+
+  /* Hide dots on tablet/desktop since it's a grid now */
+  .about-dots,
+  .services-dots {
+    display: none;
   }
 
   .about-card {
